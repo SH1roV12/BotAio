@@ -7,6 +7,7 @@ import app.keyboard as kb # type: ignore
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 import requests
+from app.states import GetWeather
 
 
 
@@ -14,8 +15,7 @@ router = Router()
 
 
 
-class GetWeather(StatesGroup):
-    city = State()
+
 
 
 @router.message(CommandStart())
