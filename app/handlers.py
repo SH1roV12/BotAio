@@ -7,7 +7,7 @@ import app.keyboard as kb # type: ignore
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 import requests
-from app.states import GetWeather
+from app.states import GetWeather, Todolist
 
 
 
@@ -70,6 +70,18 @@ async def weth2(message: types.message, state:FSMContext):
           await message.answer('Не найден город')
     await state.clear()
     
+
+@router.message(F.text == "Список дел📒")
+async def book(message:types.message, state:FSMContext):
+    await state.set_state(Todolist.todo)
+    await message.answer("Введите список дел")
+
+@router.message(Todolist.todo)
+async def book2(message: types.message, state:FSMContext):
+    await state.update_data(todo = message.text)
+    todo = await state.get_data()
+    await message.answer(f"Ваш список дел:{todo}")
+    await state.clear()
 
 
 
